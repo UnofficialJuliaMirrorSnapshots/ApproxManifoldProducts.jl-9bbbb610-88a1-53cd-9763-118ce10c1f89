@@ -4,6 +4,10 @@ os:
   - linux
   - osx
 
+arch:
+  - amd64
+  - arm64
+
 julia:
   - 0.7
   - 1.0
@@ -19,10 +23,14 @@ matrix:
   allow_failures:
     - julia: nightly
     - os: osx
+    - arch: arm64
 
 # script:
 #   - julia --color=yes -e 'using Pkg; Pkg.build()'
 #   - julia --check-bounds=yes --color=yes -e 'using Pkg; Pkg.test(coverage=true)'
+
+jobs:
+  fast_finish: true
 
 after_success:
   - julia -e 'using Pkg; cd(Pkg.dir("ApproxManifoldProducts")); Pkg.add("Coverage"); using Coverage; Codecov.submit(process_folder())'
